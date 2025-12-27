@@ -1,0 +1,32 @@
+name: 我的QQ机器人(纯商用无娱乐)
+on:
+  workflow_dispatch:
+
+jobs:
+  run_bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取仓库所有机器人文件
+        uses: actions/checkout@v4
+
+      - name: 下载go-cqhttp运行引擎
+        run: |
+          wget https://github.com/Mrs4s/go-cqhttp/releases/download/v1.2.3/go-cqhttp_linux_amd64 -O go-cqhttp
+          chmod +x go-cqhttp
+
+      - name: 配置Python环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: 安装依赖包
+        run: pip install requests
+
+      - name: 启动QQ机器人服务
+        run: |
+          python main.py &
+          sleep 20
+          ./go-cqhttp -config config.yml
+
+      - name: 保持机器人持续运行
+        run: sleep infinity
