@@ -22,16 +22,44 @@ jobs:
 
       - name: 下载最新go-cqhttp(修复404)
         run: |
-          wget -O go-cqhttp.tar.gz https://github.com/Mrs4s/go-cqhttp/releases/download/v1.2.4/go-cqhttp_linux_amd64.tar.gz
+          # 自动拉取最新版Linux amd64包，避免版本号失效
+          wget -O go-cqhttp.tar.gz https://github.com/Mrs4s/go-cqhttp/releases/latest/download/go-cqhttp_linux_amd64.tar.gz
           tar -zxvf go-cqhttp.tar.gz
           chmod +x go-cqhttp
 
       - name: 创建go-cqhttp配置文件
         run: |
-          echo '{"uin":0,"password":"","protocol":2,"platform":"linux","heartbeat_interval":5,"enable_db":true,"db_path":"./data/db","access_token":"","secret":"","post_url":"","post_message_format":"string","ignore_invalid_cqcode":false,"force_fragment":false,"proxy_rewrite":"","reconnect_interval":3,"use_sso_address":false,"enable_msg_cache":true,"msg_cache_time":120,"enable_sync_database":true}' > config.json
+          echo '{
+            "uin": 0,
+            "password": "",
+            "protocol": 2,
+            "platform": "linux",
+            "heartbeat_interval": 5,
+            "enable_db": true,
+            "db_path": "./data/db",
+            "access_token": "",
+            "secret": "",
+            "post_url": "http://127.0.0.1:8080",
+            "post_message_format": "string",
+            "ignore_invalid_cqcode": false,
+            "force_fragment": false,
+            "proxy_rewrite": "",
+            "reconnect_interval": 3,
+            "use_sso_address": true,
+            "enable_msg_cache": true,
+            "msg_cache_time": 120,
+            "enable_sync_database": true
+          }' > config.json
 
       - name: 启动QQ机器人
         run: |
-          nohup ./go-cqhttp faststart &
-          sleep 10
-          python main.py
+          # 后台启动go-cqhttp
+          nohup ./go-cqhttp faststart > go-cqhttp.log 2>&1 &
+          # 延长等待时间，确保go-cqhttp完成初始化
+          sleep 20
+          # 后台启动Python机器人代码
+          nohup python main.py > bot.log 2>&1 &
+          # 查看日志确认启动状态
+          sleep 5
+          cat go-cqhttp.log
+          cat bot.log
