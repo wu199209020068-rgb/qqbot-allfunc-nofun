@@ -1,0 +1,35 @@
+# 机器人核心配置 - 所有信息已填好 无需修改
+admin_qq: 2466363558
+private_chat:
+  reply_only_admin: true
+  admin_full_menu: true
+group_chat:
+  reply_at_only: true
+  all_normal_menu: true
+goods_config:
+  sell_group: [1077686695]
+  other_group_hide: true
+  admin_add_only: true
+api_keys:
+  nofiltergpt_sk: sk-YkNPaTdURDh6Z1VsSFJJNkE4MWdJN01kZGtVMg
+  pay_encode_key: YkNPaTdURDh6Z1VsSFJJNkE4MWdJN01kZGtVMg
+ai_config:
+  api_key: sk-YkNPaTdURDh6Z1VsSFJJNkE4MWdJN01kZGtVMg
+  api_url: https://api.nofiltergpt.com/v1/chat/completions
+  no_censor: true
+  language: zh-CN
+pay_code:
+  wechat_img: https://imgchr.com/i/pZYNyfH
+  alipay_img: https://imgchr.com/i/pZYNyfH
+  hk_alipay_img: https://imgchr.com/i/pZYNyfH
+  auto_recognize: true
+  send_to_buyer: true
+  send_admin_msg: true
+gta5_config:
+  crate_show: true
+  car_show: true
+function:
+  ai_chat: true
+  gta5_query: true
+  goods_order: true
+  entertainment: false
